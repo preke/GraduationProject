@@ -1,33 +1,38 @@
 # coding= utf-8
 import jieba
-
+from jieba import analyse
 
 def sortedDictValues2(adict):
     items = adict.items()
-    items.sort()
-    return [value for key, value in items]
+    items = sorted(items, key=lambda item: item[1], reverse=True)
+    return items
 
-if __name__ == '__main':
-    dict_1 = dict()
-    file = open('test.txt', 'r')
-    lines = file.readlines()
-    ans = []
-    for line in lines:
-        ans.append(line.decode('utf-8'))
-        # ans.append(line)
+if __name__ == '__main__':
+    dic = dict()
+    ans = open('test.txt', 'r').read()
 
-    # for line in ans:
-    #     print line
-    for line in ans:
-        seg_list = jieba.cut(line, cut_all=False)
-        for seg in seg_list:
-            # print type(seg)
-            # print seg.encode('utf-8')
-            try:
-                dict_1[seg] += 1
-            except:
-                dict_1[seg] = 1
+    tags = jieba.analyse.extract_tags(ans, 10)
+    for tag in tags:
+        print tag.encode('utf-8')
+    # seg_list = jieba.cut(ans, cut_all=False) # generator
+    # for seg in seg_list:
+    #     if dic.has_key(seg):
+    #         dic[seg] += 1
+    #     else:
+    #         dic[seg] = 1
+    #
+    # print '=========================================='
+    #
+    # lister = sortedDictValues2(dic)
+    # for li in lister:
+    #     print li
 
-    dict_1 = sortedDictValues2(dict_1)
-    for k,v in dict_1.items():
-        print k.encode('utf-8') + ' : ' + str(v)
+
+
+# http://gaopenghigh.iteye.com/blog/1483864
+# http://www.cnblogs.com/linyawen/archive/2012/03/15/2398292.html
+
+
+
+
+
